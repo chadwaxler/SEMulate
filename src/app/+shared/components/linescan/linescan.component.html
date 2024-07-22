@@ -1,0 +1,11 @@
+<highcharts-chart
+  *ngIf="_options$ | async as options"
+  [Highcharts]="Highcharts"
+  constructorType="chart"
+  [options]="options"
+  [(update)]="updateFlag"
+  (chartInstance)="setChartRef($event)"
+  [oneToOne]="true"
+  [runOutsideAngular]="true"
+  style="width: 100%; height: 200px; display: block"
+></highcharts-chart>
