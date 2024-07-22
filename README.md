@@ -1,27 +1,22 @@
-# Semulate
+# SEMulate
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.1.
+SEMulate is a web application that simulates the scanning electron microscope (SEM) imaging process. The goal of this side project was to create a very simplified analytical linescan model.
 
-## Development server
+Demo: [https://chadwaxler.github.io/SEMulate/](https://chadwaxler.github.io/SEMulate/)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Code scaffolding
+<p align="center">
+<img src="/docs/SEMulage.png"
+  alt="Size Limit comment in pull request about bundle size changes"
+  width="auto" height="700">
+</p>
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Parameters
 
-## Build
+- **Geometry: Number of Lines**: This allows the user to modify the number of resist lines on the image.  Currently, the line widths and line spacing are equal.
+- **Interaction Volume: Depth**: This is the depth of the interaction volume within the pattern.
+- **Interaction Volume: Radius**: The interaction volume is modeled as a simple circle.  Users can control the radius of the circle using this parameter.
+- **Secondary Electrons: Electrons Per Frame**: This controls the number of secondary electrons emitted per frame.
+- **Secondary Electrons: Energy Mean**: This is the mean energy of the secondary electrons.
+- **Secondary Electrons: Energy Std Dev**: This is the standard deviation of the energy of the secondary electrons.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
