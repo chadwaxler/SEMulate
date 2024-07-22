@@ -6,8 +6,8 @@ Demo: [https://chadwaxler.github.io/SEMulate/](https://chadwaxler.github.io/SEMu
 
 
 <p align="center">
-<img src="/docs/SEMulage.png"
-  alt="Size Limit comment in pull request about bundle size changes"
+<img src="/docs/SEMulate.png"
+  alt="Screenshot of the SEMulate web application"
   width="auto" height="700">
 </p>
 
