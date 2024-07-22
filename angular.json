@@ -56,6 +56,11 @@
           },
           "configurations": {
             "production": {
+              "baseHref": "/SEMulate/",
+              "outputPath": {
+                "base": "./docs/",
+                "browser": ""
+              },
               "budgets": [
                 {
                   "type": "initial",

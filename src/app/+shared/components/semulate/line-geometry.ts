@@ -5,21 +5,28 @@ export interface LineRegion {
   x2: number;
 }
 
-// Class is used to create the geometry of the lines
-// This is what numLines = 3 looks like:
-//     _____       _____       _____
-//    |     |     |     |     |     |
-// ___|     |_____|     |_____|     |____
-//
+/**
+ * This class is responsible for creating the geometry of lines on a canvas.
+ * The geometry consists of a series of elevated features (lines) separated by flat substrate areas.
+ * The number of lines (`numLines`) determines the pattern of these features.
+ *
+ * For example, with `numLines = 3`, the pattern is visualized as follows:
+ *
+ *     _____       _____       _____
+ *    |     |     |     |     |     |
+ * ___|     |_____|     |_____|     |____
+ *
+ * Each line represents an elevated feature, and the spaces in between represent the substrate.
+ */
 export class GeometryLines {
-  private _p: p5;
+  private readonly _p: p5;
+  private readonly _featureHeight = 100;
+  private readonly _canvasWidth: number;
+  private readonly _canvasHeight: number;
+  private readonly _substrate: number;
   private _numLines = 2;
-  private _featureHeight = 100;
-  private _lineRegions: LineRegion[] = [];
-  private _canvasWidth: number;
-  private _canvasHeight: number;
   private _featureWidth: number;
-  private _substrate: number;
+  private _lineRegions: LineRegion[] = [];
 
   constructor(p: p5, canvasWidth: number, canvasHeight: number) {
     this._p = p;
@@ -29,10 +36,24 @@ export class GeometryLines {
     this._substrate = this._canvasHeight / 1.25;
   }
 
-  draw() {
+  /**
+   * Draws the geometry of lines on a canvas, representing elevated features separated by flat substrate areas.
+   * This method initializes the line regions array, calculates the width (`w`) and height (`h`) for the features,
+   * and iterates through the number of lines to draw the sides, tops, and bottoms of each line.
+   *
+   * The drawing process is divided into three main parts:
+   * 1. Drawing the sides of each line feature.
+   * 2. Drawing the tops of the line features to create the elevated effect.
+   * 3. Drawing the bottoms of the spaces between line features, representing the substrate.
+   *
+   * Each part uses the p5.js `line` method to draw lines on the canvas based on calculated positions.
+   */
+  public draw(): void {
     this._lineRegions = [];
 
     const w = this._featureWidth;
+
+    // Height from the substrate to the top of the feature
     const h = this._substrate - this._featureHeight;
 
     // Draw line sides
@@ -52,24 +73,29 @@ export class GeometryLines {
     }
   }
 
-  public getRegion(xPosition: number) {
-    const lineRegion = this._lineRegions.find((lineRegion) => {
-      return xPosition > lineRegion.x1 && xPosition < lineRegion.x2;
-    });
-
+  public getYGeometry(xPosition: number): number {
+    const lineRegion = this.findLineRegion(xPosition);
     if (lineRegion) {
-      return {
-        region: 'FEATURE',
-        yGeometry: this._substrate - this._featureHeight,
-      };
+      return this._substrate - this._featureHeight;
     }
-
-    return {
-      region: 'SUBSTRATE',
-      yGeometry: this._substrate,
-    };
+    return this._substrate;
   }
 
+  /**
+   * Determines if a given point (x, y) is within the material based on its position relative to the substrate and features.
+   *
+   * Keep in mind that, for p5.js, the origin (0, 0) is at the top-left corner of the canvas. The y-axis increases downwards.
+   *
+   * The method checks three conditions to determine if the point is in the material:
+   * 1. If the y-coordinate is greater than the substrate level, the point is considered to be within the material.
+   * 2. If the y-coordinate is less than the height of the features above the substrate, the point is not in the material.
+   * 3. If the point's x-coordinate falls within the x-coordinates of any line region (representing a feature),
+   *    and its y-coordinate is between the substrate and the feature height, the point is considered to be within the material.
+   *
+   * @param x The x-coordinate of the point to check.
+   * @param y The y-coordinate of the point to check.
+   * @returns {boolean} True if the point is within the material, false otherwise.
+   */
   public isPointInMaterial(x: number, y: number): boolean {
     // If below (i.e. greater than) the substrate, then it is in the material
     if (y > this._substrate) {
@@ -81,9 +107,7 @@ export class GeometryLines {
       return false;
     }
 
-    const lineRegion = this._lineRegions.find((lineRegion) => {
-      return x > lineRegion.x1 && x < lineRegion.x2;
-    });
+    const lineRegion = this.findLineRegion(x);
 
     if (lineRegion) {
       return true;
@@ -95,5 +119,11 @@ export class GeometryLines {
   public set numLines(value: number) {
     this._numLines = value;
     this._featureWidth = this._canvasWidth / (this._numLines * 2 + 1);
+  }
+
+  private findLineRegion(xPosition: number): LineRegion | undefined {
+    return this._lineRegions.find(
+      (lineRegion) => xPosition > lineRegion.x1 && xPosition < lineRegion.x2,
+    );
   }
 }

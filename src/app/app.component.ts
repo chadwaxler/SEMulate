@@ -1,24 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { SemulateComponent } from './+shared/components/semulate/semulate.component';
+import { SemulateComponent } from '@shared/components/semulate/semulate.component';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
-import { LinescanComponent } from './+shared/components/linescan/linescan.component';
-import {
-  fromEvent,
-  Observable,
-  startWith,
-  map,
-  combineLatest,
-  tap,
-  BehaviorSubject,
-} from 'rxjs';
+import { LinescanComponent } from '@shared/components/linescan/linescan.component';
+import { combineLatest, fromEvent, map, Observable, startWith } from 'rxjs';
 
 @Component({
   selector: 'sem-root',
@@ -36,12 +22,10 @@ import {
   styleUrl: './app.component.scss',
 })
 export class AppComponent implements AfterViewInit {
-  title = 'SEMulate';
-
   public readonly formGroup = new FormGroup({
     numLines: new FormControl<number>(3),
-    aoeRadius: new FormControl<number>(10),
-    aoeDepth: new FormControl<number>(10),
+    ivRadius: new FormControl<number>(10),
+    ivDepth: new FormControl<number>(10),
     electronsPerFrame: new FormControl<number>(1000),
     energyMean: new FormControl<number>(50),
     energyStdDev: new FormControl<number>(20),
@@ -71,14 +55,14 @@ export class AppComponent implements AfterViewInit {
           },
           numLines: values.numLines,
           frameRate: 60,
-          areaOfEffect: {
-            radius: values.aoeRadius,
-            depth: values.aoeDepth,
+          interactionVolume: {
+            radius: values.ivRadius,
+            depth: values.ivDepth,
           },
           secondaryElectrons: {
             numPerFrame: values.electronsPerFrame,
             energyMean: values.energyMean,
-            energyStdDev: 20,
+            energyStdDev: values.energyStdDev,
           },
         };
 
@@ -88,6 +72,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   private _getSketchWidth(): number {
-    return this._sketchContainer?.nativeElement?.offsetWidth - 64;
+    const padding = 64;
+    return this._sketchContainer?.nativeElement?.offsetWidth - padding;
   }
 }

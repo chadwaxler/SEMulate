@@ -11,12 +11,42 @@ import {
 import p5 from 'p5';
 import { GeometryLines } from './line-geometry';
 import { Scanner } from './scanner';
-import { AreaOfEffect } from './area-of-effect';
+import { InteractionVolume } from './interaction-volume';
 import { LinescanDataService } from '../../services/linescan-data.service';
 
-const WIDTH = 600;
-const HEIGHT = 300;
-const POINTS_PER_FRAME = 1000;
+export interface Parameters {
+  canvas: {
+    width: number;
+    height: number;
+  };
+  numLines: number;
+  interactionVolume: {
+    radius: number;
+    depth: number;
+  };
+  secondaryElectrons: {
+    numPerFrame: number;
+    energyMean: number;
+    energyStdDev: number;
+  };
+}
+
+const DEFAULTS: Parameters = {
+  canvas: {
+    width: 600,
+    height: 300,
+  },
+  numLines: 3,
+  interactionVolume: {
+    radius: 10,
+    depth: 10,
+  },
+  secondaryElectrons: {
+    numPerFrame: 1000,
+    energyMean: 50,
+    energyStdDev: 20,
+  },
+};
 
 @Component({
   selector: 'sem-semulate',
@@ -27,65 +57,52 @@ const POINTS_PER_FRAME = 1000;
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SemulateComponent implements OnDestroy, AfterViewInit {
-  private _params = {
-    canvas: {
-      width: WIDTH,
-      height: HEIGHT,
-    },
-    numLines: 2,
-    frameRate: 60,
-    areaOfEffect: {
-      radius: 20,
-      depth: 10,
-    },
-    secondaryElectrons: {
-      numPerFrame: 1000,
-      energyMean: 50,
-      energyStdDev: 20,
-    },
-  };
+  @Input() public set parameters(value: Parameters) {
+    const widthChanged = this._params.canvas.width !== value.canvas.width;
+    this._params = value;
 
-  @Input() public set parameters(value: any) {
-    // If width changes, then we need to remove and recreate the p5 instance
-    if (value.canvas.width !== this._params.canvas.width && this._p5) {
-      this._params = value;
-      this._p5.remove();
-      this._p5 = null as any;
-      this._draw();
-    } else {
-      this._params = value;
-      if (this._p5) {
+    if (this._p5) {
+      if (widthChanged) {
+        // If width changed, then we have to remove and recreate sketch
+        this._p5.remove();
+        this._p5 = null as any;
+        this._draw();
+      } else {
         this._redraw();
       }
     }
   }
 
-  private _linescanData = inject(LinescanDataService);
+  private readonly _linescanData = inject(LinescanDataService);
+  private _p5!: p5;
+  private _params = DEFAULTS;
 
   @ViewChild('sketch')
-  protected _sketch!: ElementRef;
+  private _sketch!: ElementRef;
 
-  protected _p5!: p5;
-
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this._draw();
   }
 
-  private _draw() {
+  public ngOnDestroy(): void {
+    if (this._p5) {
+      this._p5.remove();
+      this._p5 = null as any;
+    }
+  }
+
+  private _draw(): void {
     this._p5 = new p5((p: p5) => {
-      // const width = this._sketch.nativeElement.offsetWidth;
-      const scanner = new Scanner(p, this._params.canvas.width);
-      const lineGeometry = new GeometryLines(
-        p,
-        this._params.canvas.width,
-        HEIGHT,
-      );
+      const width = this._params.canvas.width;
+      const height = this._params.canvas.height;
+
+      const scanner = new Scanner(p, width);
+      const lineGeometry = new GeometryLines(p, width, height);
       lineGeometry.numLines = this._params.numLines;
 
       // SETUP Lifecycle
       p.setup = () => {
-        p.createCanvas(this._params.canvas.width, HEIGHT);
-        p.frameRate(this._params.frameRate); // TODO: this.frameRate does not exist in constructor
+        p.createCanvas(width, height);
       };
 
       p.draw = () => {
@@ -95,20 +112,20 @@ export class SemulateComponent implements OnDestroy, AfterViewInit {
         lineGeometry.numLines = this._params.numLines;
         lineGeometry.draw();
 
-        const region = lineGeometry.getRegion(scanner.xPosition);
-        const areaOfEffect = new AreaOfEffect(
+        const yGeometry = lineGeometry.getYGeometry(scanner.xPosition);
+        const interactionVolume = new InteractionVolume(
           p,
           scanner.xPosition,
-          region.yGeometry,
-          this._params.areaOfEffect.depth,
-          this._params.areaOfEffect.radius,
+          yGeometry,
+          this._params.interactionVolume.depth,
+          this._params.interactionVolume.radius,
         );
-        areaOfEffect.draw();
+        interactionVolume.draw();
         scanner.draw();
 
         let escapedElectrons = 0;
         for (let i = 0; i < this._params.secondaryElectrons.numPerFrame; i++) {
-          const [x, y] = areaOfEffect.randomPoint;
+          const [x, y] = interactionVolume.randomPoint;
 
           if (lineGeometry.isPointInMaterial(x, y)) {
             p.circle(x, y, 3);
@@ -141,13 +158,6 @@ export class SemulateComponent implements OnDestroy, AfterViewInit {
         this._linescanData.updateData(scanner.detections);
       };
     }, this._sketch.nativeElement);
-  }
-
-  public ngOnDestroy(): void {
-    if (this._p5) {
-      this._p5.remove();
-      this._p5 = null as any;
-    }
   }
 
   private _redraw(): void {
