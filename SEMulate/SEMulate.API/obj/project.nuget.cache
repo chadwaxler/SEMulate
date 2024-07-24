@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "QUcxbmswjP+Dn5mU89ZagvQNW1XvKt+IIv31tCOyYGBkk2K3IeEEjfWvFsza0PJ206PLgllEMn/19ufYL83X5Q==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\chadw\\Desktop\\Repositories\\semulate\\SEMulate\\SEMulate.API\\SEMulate.API.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\chadw\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\chadw\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\chadw\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\chadw\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\chadw\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\chadw\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}

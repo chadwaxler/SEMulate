@@ -1,0 +1,6 @@
+@SEMulate.API_HostAddress = http://localhost:5012
+
+GET {{SEMulate.API_HostAddress}}/semulate/
+Accept: application/json
+
+###
