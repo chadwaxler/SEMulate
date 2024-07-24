@@ -41,7 +41,7 @@ public class SEMulateService
                 }
 
                 // Create the secondary electron and simulate its path
-                var energy = new Random().Next(20, 40);
+                var energy = new Random().Next(30, 90);
                 var angle = new Random().NextDouble() * 2 * Math.PI;
                 var secondaryElectron = new SecondaryElectron(startingPosition, energy, angle);
 
