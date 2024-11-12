@@ -9,8 +9,8 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'from-api',
+    path: 'about',
     loadComponent: () =>
-      import('./from-api/from-api.component').then((m) => m.FromApiComponent),
+      import('./about/about.component').then((m) => m.AboutComponent),
   },
 ];

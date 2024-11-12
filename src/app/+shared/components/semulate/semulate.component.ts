@@ -149,6 +149,10 @@ export class SemulateComponent implements OnDestroy, AfterViewInit {
 
               p.stroke(42, 252, 42, 50);
               p.line(x, y, xEnd, yEnd);
+            } else {
+              // If the line is still in the material, draw it in red
+              p.stroke(252, 42, 42, 5);
+              p.line(x, y, xEnd, yEnd);
             }
           }
         }
