@@ -49,12 +49,11 @@ const DEFAULTS: Parameters = {
 };
 
 @Component({
-  selector: 'sem-semulate',
-  standalone: true,
-  imports: [],
-  templateUrl: './semulate.component.html',
-  styleUrl: './semulate.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'sem-semulate',
+    imports: [],
+    templateUrl: './semulate.component.html',
+    styleUrl: './semulate.component.scss',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SemulateComponent implements OnDestroy, AfterViewInit {
   @Input() public set parameters(value: Parameters) {

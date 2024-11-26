@@ -7,11 +7,10 @@ import { map, Observable, tap } from 'rxjs';
 import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
 
 @Component({
-  selector: 'sem-linescan',
-  standalone: true,
-  imports: [HighchartsChartModule, AsyncPipe, NgIf, JsonPipe],
-  templateUrl: './linescan.component.html',
-  styleUrl: './linescan.component.scss',
+    selector: 'sem-linescan',
+    imports: [HighchartsChartModule, AsyncPipe, NgIf, JsonPipe],
+    templateUrl: './linescan.component.html',
+    styleUrl: './linescan.component.scss'
 })
 export class LinescanComponent {
   Highcharts: typeof Highcharts = Highcharts; // required
