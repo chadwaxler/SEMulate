@@ -8,26 +8,21 @@ import {
   startWith,
   tap,
 } from 'rxjs';
-import { RouterLink, RouterOutlet } from '@angular/router';
 import {
   Parameters,
   SemulateComponent,
 } from '@shared/components/semulate/semulate.component';
-import { AsyncPipe, JsonPipe, NgIf } from '@angular/common';
+import { AsyncPipe, NgIf } from '@angular/common';
 import { LinescanComponent } from '@shared/components/linescan/linescan.component';
 
 @Component({
   selector: 'sem-on-client',
-  standalone: true,
   imports: [
-    RouterOutlet,
     SemulateComponent,
     ReactiveFormsModule,
     AsyncPipe,
     LinescanComponent,
     NgIf,
-    JsonPipe,
-    RouterLink,
   ],
   templateUrl: './on-client.component.html',
   styleUrl: './on-client.component.scss',

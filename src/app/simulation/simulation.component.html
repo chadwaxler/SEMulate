@@ -1,0 +1,27 @@
+<main
+  class="relative flex h-full w-full flex-col-reverse md:h-[calc(100vh-65px)] md:flex-row"
+>
+  <!-- LEFT SIDE -->
+  <div class="z-10 grid min-w-[400px] grid-cols-1 divide-y p-4">
+    <sem-microscope-options></sem-microscope-options>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="flex w-full flex-col gap-4 bg-gray-200 p-4">
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-base">
+          Secondary Electron Detections vs Position
+        </h2>
+        <sem-linescan></sem-linescan>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow-xl">
+      <div #sketchContainer class="card-body">
+        <h2 class="card-title text-base">SEM Simulation</h2>
+        <sem-microscope></sem-microscope>
+      </div>
+    </div>
+  </div>
+</main>
