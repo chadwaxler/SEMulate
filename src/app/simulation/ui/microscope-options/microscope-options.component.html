@@ -1,1 +1,108 @@
-<p>microscope-options works!</p>
+<form [formGroup]="formGroup">
+  <!-- PATTERN GEOMETRY -->
+  <div class="py-8">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-gray-900">
+        Pattern Geometry
+      </h2>
+    </div>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text text-sm text-gray-500">NUMBER OF LINES</span>
+      </div>
+      <input
+        formControlName="numLines"
+        type="number"
+        class="input input-bordered w-full"
+      />
+    </label>
+  </div>
+
+  <!-- INTERACTION VOLUME -->
+  <div class="py-8">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-gray-900">
+        Interaction Volume
+      </h2>
+    </div>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text text-sm text-gray-500">DEPTH</span>
+      </div>
+      <input
+        formControlName="ivDepth"
+        type="range"
+        min="2"
+        max="30"
+        class="range"
+        step="2"
+      />
+    </label>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text text-sm text-gray-500">RADIUS</span>
+      </div>
+      <input
+        formControlName="ivRadius"
+        type="range"
+        min="2"
+        max="20"
+        class="range"
+        step="2"
+      />
+    </label>
+  </div>
+
+  <!-- SECONDARY ELECTRONS -->
+  <div class="py-8">
+    <div>
+      <h2 class="text-base font-semibold leading-7 text-gray-900">
+        Secondary Electrons
+      </h2>
+    </div>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text text-sm text-gray-500">
+          ELECTRONS PER FRAME
+        </span>
+      </div>
+      <input
+        formControlName="electronsPerFrame"
+        type="number"
+        class="input input-bordered w-full"
+      />
+    </label>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text text-sm text-gray-500">ENERGY MEAN</span>
+      </div>
+      <input
+        formControlName="energyMean"
+        type="range"
+        min="5"
+        max="100"
+        class="range"
+        step="5"
+      />
+    </label>
+
+    <label class="form-control w-full">
+      <div class="label">
+        <span class="label-text text-sm text-gray-500">ENERGY STD DEV</span>
+      </div>
+      <input
+        formControlName="energyStdDev"
+        type="range"
+        min="2"
+        max="60"
+        class="range"
+        step="2"
+      />
+    </label>
+  </div>
+</form>

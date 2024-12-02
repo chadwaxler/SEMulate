@@ -23,9 +23,10 @@
       "dom"
     ],
     "paths": {
-      "@shared/*": [
-        "./src/app/+shared/*"
-      ]
+      "@sim/*": ["./src/app/simulation/*"],
+      "@about/*": ["./src/app/about/*"],
+      "@stores/*": ["./src/app/simulation/stores/*"],
+      "@ui/*": ["./src/app/simulation/ui/*"],
     }
   },
   "angularCompilerOptions": {
