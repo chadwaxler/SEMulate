@@ -4,6 +4,7 @@ SEMulate is a web application that simulates the scanning electron microscope (S
 
 Demo: [https://chadwaxler.github.io/SEMulate/](https://chadwaxler.github.io/SEMulate/)
 
+**Built With:** Angular (v19), NgRx Signal Store, p5.js, Highcharts, TailwindCSS, and DaisyUI.
 
 <p align="center">
 <img src="/docs/SEMulate.png"
