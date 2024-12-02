@@ -1,0 +1,1 @@
+import{Da as o,Pa as n,Qa as i,Va as a}from"./chunk-YA72N5MZ.js";var c=(()=>{class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=o({type:e,selectors:[["sem-about"]],decls:2,vars:0,template:function(t,p){t&1&&(n(0,"p"),a(1,"about works!"),i())},encapsulation:2})}return e})();export{c as AboutComponent};
